@@ -1,3 +1,5 @@
+This is based on http://github.com/full-stack-deep-learning/fsdl-text-recognizer-project
+
 Readings:
 - Sequence Modeling With CTC https://distill.pub/2017/ctc/
 
