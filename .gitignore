@@ -1,6 +1,6 @@
 # Data
 data/processed
-data/temp
+data/cache
 
 # Python
 __pycache__
@@ -9,7 +9,7 @@ __pycache__
 
 # Misc
 .DS_Store
-
-
+.idea
+.vscode
 
 
