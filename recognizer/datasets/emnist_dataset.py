@@ -25,25 +25,32 @@ class EmnistDataset(Dataset):
 
     def _prepare(self, path):
         self.mapping = self._load_labels_mapping()
+        self.number_of_classes = len(self.mapping)
 
         data = loadmat(path / "emnist-byclass.mat")
 
         # load training dataset
-        x_train = data["dataset"][0][0][0][0][0][0].astype(np.float32).reshape(-1, 28, 28, order="A")
+        x_train = data["dataset"][0][0][0][0][0][0]
+        x_train = x_train.reshape(x_train.shape[0], 28, 28, 1, order="A")
         y_train = data["dataset"][0][0][0][0][0][1]
+
         print("Balancing train dataset...")
         x_train, y_train = self._sample_to_balance(x_train, y_train)
 
         # load test dataset
-        x_test = data["dataset"][0][0][1][0][0][0].astype(np.float32).reshape(-1, 28, 28, order="A")
+        x_test = data["dataset"][0][0][1][0][0][0]
+        x_test = x_test.reshape(x_test.shape[0], 28, 28, 1, order="A")
         y_test = data["dataset"][0][0][1][0][0][1]
 
+        # https://www.tensorflow.org/guide/datasets
         self.train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
         self.test_dataset = tf.data.Dataset.from_tensor_slices((x_test, y_test))
+        print("Dataset ready")
 
     @staticmethod
     def _load_labels_mapping():
-        with open("emnist_essentials.json") as json_file:
+        raw_data_path = Dataset.raw_data_path()
+        with open(raw_data_path / "emnist" / "emnist_essentials.json") as json_file:
             mapping = json.load(json_file)["mapping"]
             mapping = {m[0]: m[1] for m in mapping}
 
@@ -70,6 +77,7 @@ class EmnistDataset(Dataset):
 
 if __name__ == '__main__':
     _dataset = EmnistDataset()
+    print(f"Number of classes: {_dataset.number_of_classes}")
 
     (_image, _label), = _dataset.train_dataset.take(1)
     # Convert the label tensor to numpy array and then get its Python scalar value.

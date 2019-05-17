@@ -27,6 +27,7 @@ class Dataset:
         self._download()
 
     def _download(self):
+        # https://www.tensorflow.org/alpha/tutorials/load_data/images
         download_path = keras.utils.get_file(
             origin=self.url,
             fname=self.file_name,
