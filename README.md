@@ -4,8 +4,8 @@ This is based on http://github.com/full-stack-deep-learning/fsdl-text-recognizer
 - Sequence Modeling With CTC https://distill.pub/2017/ctc/
 
 ## Setup local env:
-1. Create conda env `conda env create -f environment.yml –n line-reader`
-2. Update env file `conda env export > environment.yml`
+1. Create conda env `conda env create -f environment.yml`
+2. Update env file `conda env export --no-builds > environment.yml`
 3. Update env file after installing some packages `conda env update –f environment.yml`
 
 ### Enable jupyter lab git extension:
