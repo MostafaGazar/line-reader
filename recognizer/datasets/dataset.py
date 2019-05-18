@@ -1,3 +1,5 @@
+import abc
+
 from pathlib import Path
 from tensorflow.python import keras
 
@@ -41,8 +43,9 @@ class Dataset:
         extracted_data_path = download_path.parent / self.file_name.split(".")[0]
         self._prepare(extracted_data_path)
 
+    @abc.abstractmethod
     def _prepare(self, path):
-        pass
+        raise NotImplementedError("Dataset must override _prepare")
 
 
 if __name__ == '__main__':

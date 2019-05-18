@@ -30,7 +30,7 @@ class EmnistDataset(Dataset):
         data = loadmat(path / "emnist-byclass.mat")
 
         # load training dataset
-        x_train = data["dataset"][0][0][0][0][0][0]
+        x_train = data["dataset"][0][0][0][0][0][0].astype(np.float32)
         x_train = x_train.reshape(x_train.shape[0], 28, 28, 1, order="A")
         y_train = data["dataset"][0][0][0][0][0][1]
 
@@ -38,14 +38,14 @@ class EmnistDataset(Dataset):
         x_train, y_train = self._sample_to_balance(x_train, y_train)
 
         # load test dataset
-        x_test = data["dataset"][0][0][1][0][0][0]
+        x_test = data["dataset"][0][0][1][0][0][0].astype(np.float32)
         x_test = x_test.reshape(x_test.shape[0], 28, 28, 1, order="A")
         y_test = data["dataset"][0][0][1][0][0][1]
 
         # https://www.tensorflow.org/guide/datasets
         self.train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
         self.test_dataset = tf.data.Dataset.from_tensor_slices((x_test, y_test))
-        print("Dataset ready")
+        print(f"Dataset ready, with {len(y_train)} training entries and {len(y_test)} test entries")
 
     @staticmethod
     def _load_labels_mapping():
