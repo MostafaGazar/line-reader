@@ -14,8 +14,6 @@ $ jupyter labextension install @jupyterlab/git
 $ jupyter serverextension enable --py jupyterlab_git
 ```
 
-### Troubleshooting
-* In case the new kernel didn't show up in Jupyter, you can add it manually `python -m ipykernel install --user --name line-reader`
 
 
 
