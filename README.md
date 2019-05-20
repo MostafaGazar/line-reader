@@ -5,7 +5,7 @@ This is based on http://github.com/full-stack-deep-learning/fsdl-text-recognizer
 
 ## Setup local env:
 1. Create conda env `conda env create -f environment.yml`
-2. Update env file `conda env export --no-builds > environment.yml`
+2. Update env file `conda update --all` then  `conda env export --no-builds > environment.yml`
 3. Update env file after installing some packages `conda env update –f environment.yml`
 
 ### Enable jupyter lab git extension:
