@@ -5,6 +5,7 @@ import numpy as np
 import toml
 import json
 from scipy.io import loadmat
+from tensorflow.python.keras.utils import to_categorical
 
 
 class EmnistDataset(Dataset):
@@ -33,6 +34,7 @@ class EmnistDataset(Dataset):
         x_train = data["dataset"][0][0][0][0][0][0].astype(np.float32)
         x_train = x_train.reshape(x_train.shape[0], 28, 28, 1, order="A")
         y_train = data["dataset"][0][0][0][0][0][1]
+        y_train = to_categorical(y_train, self.number_of_classes).astype(np.int)
 
         print("Balancing train dataset...")
         x_train, y_train = self._sample_to_balance(x_train, y_train)
@@ -41,6 +43,7 @@ class EmnistDataset(Dataset):
         x_test = data["dataset"][0][0][1][0][0][0].astype(np.float32)
         x_test = x_test.reshape(x_test.shape[0], 28, 28, 1, order="A")
         y_test = data["dataset"][0][0][1][0][0][1]
+        y_test = to_categorical(y_test, self.number_of_classes).astype(np.int)
 
         # https://www.tensorflow.org/guide/datasets
         self.train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
