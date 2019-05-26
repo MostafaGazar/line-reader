@@ -1,2 +1,4 @@
-from .lenet import lenet5
+from .network_input import NetworkInput
+
+from .lenet import lenet
 from .simple import simple

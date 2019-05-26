@@ -1,11 +1,12 @@
-from recognizer.datasets import Dataset
-
-import tensorflow as tf
-import numpy as np
-import toml
 import json
+
+import numpy as np
+import tensorflow as tf
+import toml
 from scipy.io import loadmat
 from tensorflow.python.keras.utils import to_categorical
+
+from recognizer.datasets import Dataset
 
 
 class EmnistDataset(Dataset):
@@ -34,7 +35,12 @@ class EmnistDataset(Dataset):
         x_train = data["dataset"][0][0][0][0][0][0].astype(np.float32)
         x_train = x_train.reshape(x_train.shape[0], 28, 28, 1, order="A")
         y_train = data["dataset"][0][0][0][0][0][1]
+        # One hot encoding
         y_train = to_categorical(y_train, self.number_of_classes).astype(np.int)
+
+        # Calculate mean and standard deviation for input normalization
+        self.mean = x_train.mean()#.astype(np.float32)
+        self.std = x_train.std()#.astype(np.float32)
 
         print("Balancing train dataset...")
         x_train, y_train = self._sample_to_balance(x_train, y_train)
@@ -81,7 +87,8 @@ class EmnistDataset(Dataset):
 if __name__ == '__main__':
     _dataset = EmnistDataset()
     print(f"Number of classes: {_dataset.number_of_classes}")
+    print(f"mean: {_dataset.mean}, std: {_dataset.std}")
 
     (_image, _label), = _dataset.train_dataset.take(1)
     # Convert the label tensor to numpy array and then get its Python scalar value.
-    print(f"Image shape: {_image.shape}, label: {_label} - {_dataset.mapping[_label.numpy().item()]}")
+    print(f"Image shape: {_image.shape}, label: {_label}")

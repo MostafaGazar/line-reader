@@ -1,6 +1,6 @@
 import abc
-
 from pathlib import Path
+
 from tensorflow.python import keras
 
 
