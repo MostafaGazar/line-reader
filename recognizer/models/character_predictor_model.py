@@ -2,21 +2,20 @@ from pathlib import Path
 from typing import Callable
 
 import tensorflow as tf
-from tensorflow.python import keras
-from tensorflow.python.data import Dataset
+from tensorflow.data import Dataset
+from tensorflow import keras
 
-from recognizer.models import Model
+from recognizer.models.base import Model
 from recognizer.networks import NetworkInput
 
 
 class CharacterModel(Model):
 
-    def __init__(self, network: Callable[[NetworkInput], Model], save_path: Path):
+    def __init__(self, network: Callable[[NetworkInput], Model], save_path: Path, initial_learning_rate: float = 0.01):
         super().__init__(network, save_path)
 
         self.loss_object = keras.losses.CategoricalCrossentropy()
 
-        initial_learning_rate = 0.01
         learning_rate_schedule = keras.optimizers.schedules.ExponentialDecay(
             initial_learning_rate,
             decay_steps=100000,
@@ -41,6 +40,11 @@ class CharacterModel(Model):
         else:
             print("Initializing from scratch.")
 
+        # Batch the datasets
+        train_dataset = train_dataset.shuffle(1024).batch(batch_size).prefetch(
+            buffer_size=tf.data.experimental.AUTOTUNE)
+        valid_dataset = valid_dataset.batch(batch_size)
+
         # Start training the model.
         for epoch in range(1, epochs + 1):
             for images, labels in train_dataset:
@@ -56,7 +60,7 @@ class CharacterModel(Model):
 
             print(f"Epoch {epoch}, "
                   f"Loss: {self.train_loss.result()}, Accuracy: {self.train_accuracy.result() * 100}, "
-                  f"Test Loss: {self.test_loss.result()}, Test Accuracy: {self.test_accuracy.result() * 100}")
+                  f"Valid Loss: {self.test_loss.result()}, Valid Accuracy: {self.test_accuracy.result() * 100}")
 
         # Save the model.
         self.network.trainable = False
@@ -83,13 +87,20 @@ class CharacterModel(Model):
 
 
 if __name__ == '__main__':
-    _learning_rate_schedule = keras.optimizer.schedules.ExponentialDecay(
-        .01,
-        decay_steps=100000,
-        decay_rate=0.96,
-        staircase=True)
+    from recognizer.datasets import EmnistDataset
+    from recognizer.networks import lenet
 
-    # optimizer = keras.optimizers.RMSprop(learning_rate=learning_rate_schedule)
-    print(_learning_rate_schedule)
+    _emnist = EmnistDataset()
+    _train_dataset = _emnist.train_dataset
+    _valid_dataset = _emnist.test_dataset
 
-    # network = lenet(NetworkInput(input_shape=input_shape, mean=emnist.mean, std=emnist.std, number_of_classes=emnist.number_of_classes))
+    (x_train, y_train), = _train_dataset.take(1)
+    input_shape = tuple(x_train.shape) # Use x_train[0] when batched
+    print(f"x shape: {x_train.shape}, model input shape: {input_shape}")
+
+    _network = lenet(NetworkInput(input_shape=input_shape, mean=_emnist.mean, std=_emnist.std,
+                                  number_of_classes=_emnist.number_of_classes))
+    _model = CharacterModel(network=_network, save_path=Path("../recognizer/weights/character_model.h5"))
+
+    _model.train(checkpoints_path=Path("../recognizer/ckpts/character_model"), train_dataset=_train_dataset,
+                 valid_dataset=_valid_dataset)
