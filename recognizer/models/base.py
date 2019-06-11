@@ -15,6 +15,6 @@ class Model:
         self.save_path = save_path
 
     @abc.abstractmethod
-    def train(self, train_dataset: Dataset, checkpoints_path: Path, valid_dataset: Dataset = None,
-              batch_size: int = 256, epochs: int = 16):
+    def train(self, train_dataset: Dataset, valid_dataset: Dataset = None,
+              batch_size: int = 256, epochs: int = 16, checkpoints_path: Path = None):
         pass

@@ -29,16 +29,19 @@ class CharacterModel(Model):
         self.test_loss = keras.metrics.Mean(name='test_loss')
         self.test_accuracy = keras.metrics.CategoricalAccuracy(name='test_accuracy')
 
-    def train(self, checkpoints_path: Path, train_dataset: Dataset, valid_dataset: Dataset = None,
-              batch_size: int = 256, epochs: int = 16):
-        checkpoints_path.mkdir(parents=True, exist_ok=True)
-        ckpt = tf.train.Checkpoint(step=tf.Variable(1), optimizer=self.optimizer, net=self.network)
-        manager = tf.train.CheckpointManager(ckpt, checkpoints_path, max_to_keep=3)
-        ckpt.restore(manager.latest_checkpoint)
-        if manager.latest_checkpoint:
-            print(f"Restored from {manager.latest_checkpoint}")
-        else:
-            print("Initializing from scratch.")
+    def train(self, train_dataset: Dataset, valid_dataset: Dataset = None,
+              batch_size: int = 256, epochs: int = 16, checkpoints_path: Path = None):
+        ckpt = None
+        manager = None
+        if checkpoints_path is not None:
+            checkpoints_path.mkdir(parents=True, exist_ok=True)
+            ckpt = tf.train.Checkpoint(step=tf.Variable(1), optimizer=self.optimizer, net=self.network)
+            manager = tf.train.CheckpointManager(ckpt, checkpoints_path, max_to_keep=3)
+            ckpt.restore(manager.latest_checkpoint)
+            if manager.latest_checkpoint:
+                print(f"Restored from {manager.latest_checkpoint}")
+            else:
+                print("Initializing from scratch.")
 
         # Batch the datasets
         train_dataset = train_dataset.shuffle(1024).batch(batch_size).prefetch(
@@ -53,10 +56,11 @@ class CharacterModel(Model):
             for valid_images, valid_labels in valid_dataset:
                 self._test_step(valid_images, valid_labels)
 
-            ckpt.step.assign_add(1)
-            if int(ckpt.step) % 10 == 0:
-                save_path = manager.save()
-                print(f"💾 Saved checkpoint for step {int(ckpt.step)}: {save_path}")
+            if checkpoints_path is not None:
+                ckpt.step.assign_add(1)
+                if int(ckpt.step) % 10 == 0:
+                    save_path = manager.save()
+                    print(f"💾 Saved checkpoint for step {int(ckpt.step)}: {save_path}")
 
             print(f"Epoch {epoch}, "
                   f"Loss: {self.train_loss.result()}, Accuracy: {self.train_accuracy.result() * 100}, "

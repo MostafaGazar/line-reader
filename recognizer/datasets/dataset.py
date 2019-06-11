@@ -26,6 +26,9 @@ class Dataset:
         self.file_name = file_name
         self.sha256 = sha256
 
+        self.train_dataset = None
+        self.test_dataset = None
+
         self._download()
 
     def _download(self):
