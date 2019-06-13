@@ -29,7 +29,7 @@ def run_experiment(experiment_config: dict):
 
     (x_train, y_train), = dataset.train_dataset.take(1)
     input_shape = tuple(x_train.shape)  # Use x_train[0] when batched
-    print(f"x shape: {x_train.shape}, model input shape: {input_shape}")
+    print(f"X shape: {x_train.shape}, model input shape: {input_shape}")
     network_input = NetworkInput(input_shape=input_shape, mean=dataset.mean, std=dataset.std,
                                  number_of_classes=dataset.number_of_classes)
 
@@ -55,7 +55,9 @@ def _parse_args():
     parser.add_argument(
         "experiment_config",
         type=str,
-        help="{\"dataset\":\"EmnistDataset\",\"network\":\"lenet\",\"model\":\"CharacterModel\",\"train_args\":{\"save_path\":\"recognizer/weights/character_model.h5\",\"initial_learning_rate\":0.01,\"batch_size\":256,\"epochs\":16,\"checkpoints_path\":null}}"
+        help="{\"dataset\":\"EmnistDataset\",\"network\":\"lenet\",\"model\":\"CharacterModel\",\"train_args\":{"
+             "\"save_path\":\"recognizer/weights/character_model.h5\",\"initial_learning_rate\":0.01,"
+             "\"batch_size\":256,\"epochs\":16,\"checkpoints_path\":null}} "
     )
 
     args = parser.parse_args()
@@ -64,10 +66,14 @@ def _parse_args():
 
 if __name__ == '__main__':
     """Run experiment"""
-    _args = _parse_args()
-
-    _experiment_config = json.loads(_args.experiment_config)
-    run_experiment(_experiment_config)
-
-    # _experiment_config = json.loads("{\"dataset\":\"EmnistDataset\",\"network\":\"lenet\",\"model\":\"CharacterModel\",\"train_args\":{\"save_path\":\"recognizer/weights/character_model.h5\",\"initial_learning_rate\":0.01,\"batch_size\":256,\"epochs\":16,\"checkpoints_path\":null}}")
+    # _args = _parse_args()
+    #
+    # _experiment_config = json.loads(_args.experiment_config)
     # run_experiment(_experiment_config)
+
+    _experiment_config = json.loads("{\"dataset\":\"EmnistDataset\",\"network\":\"lenet\","
+                                    "\"model\":\"CharacterModel\",\"train_args\":{"
+                                    "\"save_path\":\"recognizer/weights/character_model.h5\","
+                                    "\"initial_learning_rate\":0.01,\"batch_size\":256,\"epochs\":16,"
+                                    "\"checkpoints_path\":null}}")
+    run_experiment(_experiment_config)

@@ -31,6 +31,8 @@ class CharacterModel(Model):
 
     def train(self, train_dataset: Dataset, valid_dataset: Dataset = None,
               batch_size: int = 256, epochs: int = 16, checkpoints_path: Path = None):
+        print("Training model...")
+
         ckpt = None
         manager = None
         if checkpoints_path is not None:
