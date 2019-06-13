@@ -2,8 +2,9 @@ from pathlib import Path
 from typing import Callable
 
 import tensorflow as tf
-from tensorflow.data import Dataset
 from tensorflow import keras
+from tensorflow.data import Dataset
+from tensorflow.python.keras import Model as KerasModel
 
 from recognizer.models.base import Model
 from recognizer.networks import NetworkInput
@@ -11,7 +12,7 @@ from recognizer.networks import NetworkInput
 
 class CharacterModel(Model):
 
-    def __init__(self, network: Callable[[NetworkInput], Model], save_path: Path, initial_learning_rate: float = 0.01):
+    def __init__(self, network: Callable[[NetworkInput], KerasModel], save_path: Path, initial_learning_rate: float = 0.01):
         super().__init__(network, save_path)
 
         self.loss_object = keras.losses.CategoricalCrossentropy()

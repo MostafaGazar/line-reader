@@ -1,4 +1,4 @@
-from tensorflow.python.keras import Model
+from tensorflow.python.keras import Model as KerasModel
 from tensorflow.python.keras import layers
 from tensorflow.python.keras.models import Sequential
 
@@ -7,7 +7,7 @@ from recognizer.utils import norm
 
 
 # Shape: https://www.tensorflow.org/api_docs/python/tf/shape
-def lenet(network_input: NetworkInput) -> Model:
+def lenet(network_input: NetworkInput) -> KerasModel:
     model = Sequential()
 
     model.add(layers.Lambda(lambda x: norm(x, network_input.mean, network_input.std), input_shape=network_input.input_shape, output_shape=network_input.input_shape))

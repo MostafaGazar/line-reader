@@ -3,14 +3,14 @@ from pathlib import Path
 from typing import Callable
 
 from tensorflow.python.data import Dataset
-from tensorflow.python.keras import Model
+from tensorflow.python.keras import Model as KerasModel
 
 from recognizer.networks import NetworkInput
 
 
 class Model:
 
-    def __init__(self, network: Callable[[NetworkInput], Model], save_path: Path):
+    def __init__(self, network: Callable[[NetworkInput], KerasModel], save_path: Path):
         self.network = network
         self.save_path = save_path
 
