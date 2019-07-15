@@ -21,6 +21,12 @@ class Dataset:
         path.mkdir(parents=True, exist_ok=True)
         return path
 
+    @classmethod
+    def processed_data_path(cls):
+        path = cls.data_path() / "data" / "processed"
+        path.mkdir(parents=True, exist_ok=True)
+        return path
+
     def __init__(self, url: str, file_name: str, sha256: str):
         self.url = url
         self.file_name = file_name
