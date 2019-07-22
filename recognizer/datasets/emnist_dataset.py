@@ -39,8 +39,8 @@ class EmnistDataset(Dataset):
         y_train = to_categorical(y_train, self.number_of_classes).astype(np.int)
 
         # Calculate mean and standard deviation for input normalization
-        self.mean = x_train.mean()#.astype(np.float32)
-        self.std = x_train.std()#.astype(np.float32)
+        self.mean = x_train.mean()
+        self.std = x_train.std()
 
         print("Balancing train dataset...")
         x_train, y_train = self._sample_to_balance(x_train, y_train)

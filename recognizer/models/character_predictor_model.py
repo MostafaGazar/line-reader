@@ -102,7 +102,7 @@ if __name__ == '__main__':
     _valid_dataset = _emnist.test_dataset
 
     (x_train, y_train), = _train_dataset.take(1)
-    input_shape = tuple(x_train.shape) # Use x_train[0] when batched
+    input_shape = tuple(x_train.shape)  # Use x_train[0] when batched
     print(f"x shape: {x_train.shape}, model input shape: {input_shape}")
 
     _network = lenet(NetworkInput(input_shape=input_shape, mean=_emnist.mean, std=_emnist.std,
