@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ~/Work/notebooks/line-reader
+
+conda activate line-reader
+
+jupyter lab

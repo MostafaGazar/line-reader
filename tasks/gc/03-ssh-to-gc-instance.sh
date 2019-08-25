@@ -1,4 +1,4 @@
 #!/bin/bash
 set -x #echo on
 
-gcloud compute ssh --zone=$'us-west2-b' jupyter@$'line-reader' -- -L 8080:localhost:8080
+gcloud compute ssh --zone=$'us-central1-b' jupyter@$'keras' -- -L 8080:localhost:8080
