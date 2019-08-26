@@ -12,13 +12,16 @@
 # Work with virtualenv
 
 ## Create a new env
-`virtualenv -p python3 .env`
+`virtualenv -p python3 .venv_lines_reader`
 
 ## Install a Jupyter kernel
-`ipython kernel install --user --name=.venv`
+`ipython kernel install --user --name=.venv_lines_reader`
+
+## Uninstall that kernal
+`jupyter kernelspec uninstall .venv_lines_reader`
 
 ## Activate the env
-`source .env/bin/activate`
+`source .venv_lines_reader/bin/activate`
 
 ## Deactivate the env
 `deactivate`

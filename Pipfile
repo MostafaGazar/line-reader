@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+ipykernel = "*"
+matplotlib = "*"
+pandas = "*"
+pillow = "*"
+toml = "*"
+scipy = "*"
+dataclasses = "*"
+nltk = "*"
+tqdm = "*"
+tensorflow-gpu = "*"
+
+[requires]
+python_version = "3.7"
