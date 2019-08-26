@@ -2,6 +2,7 @@
 
 cd ~/Work/notebooks/line-reader
 
-conda activate line-reader
+#conda activate line-reader
+#jupyter lab
 
-jupyter lab
+pipenv run jupyter lab
