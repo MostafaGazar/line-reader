@@ -15,8 +15,8 @@ scipy = "*"
 dataclasses = "*"
 nltk = "*"
 tqdm = "*"
-tensorflow = "*"
 jupyterlab = "*"
+tensorflow-gpu = "*"
 
 [requires]
 python_version = "3.7"
