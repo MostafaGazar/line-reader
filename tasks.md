@@ -4,12 +4,12 @@ Part 1
 - [x] Train a few models based on different networks to recognize characters
 - [x] Generate lines dataset from emnist dataset
 - [x] Build a new conv net model to detect characters in an image of fixed dimensions
-- [ ] Use CTC loss with LSTM on TimeDistrubted to imporve the predications on an image of fixed dimensions
+- [x] Use CTC loss with LSTM on TimeDistrubted to imporve the predications on an image of fixed dimensions
 
 - [ ] Explore IAM datasets
 - [ ] Improve the model even more by:
-    - [ ] Wrap the LSTM in a Bidirectional() wrapper, which will have two LSTMs read the input forward and backward and concatenate the outputs
-    - [ ] Stack a few layers of LSTMs
+    - [x] Wrap the LSTM in a Bidirectional() wrapper, which will have two LSTMs read the input forward and backward and concatenate the outputs
+    - [x] Stack a few layers of LSTMs
     - [ ] Try recurrent dropout
     - [ ] Add BatchNormalization
 
