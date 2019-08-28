@@ -32,3 +32,5 @@ $ jupyter labextension install @jupyterlab/git
 $ jupyter serverextension enable --py jupyterlab_git
 ```
 
+
+pipenv run pip install tensorflow-gpu==2.0.0-rc0
