@@ -1,6 +1,5 @@
 In this project I finally switched to using `pipenv` instead of `conda`. I also tried `virtualenv` :|
 
-
 First you need to install linuxbrew or macbrew then use to install `pipenv`
 
 ## Install pipenv
@@ -31,7 +30,7 @@ pipenv --rm
 
 ## To avoid switching between tensorflow gpu and cpu versions when moving my code between my local and the cloud I installed relevant version using pip instead
 ```
-pipenv run pip install tensorflow==2.0.0-rc0
+pipenv run pip install tensorflow==2.0.0-beta1
 # Or
-pipenv run pip install tensorflow-gpu==2.0.0-rc0
+pipenv run pip install tensorflow-gpu==2.0.0-beta1
 ```
