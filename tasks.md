@@ -12,6 +12,7 @@ Part 1
     - [x] Stack a few layers of LSTMs
     - [ ] Try recurrent dropout
     - [ ] Add BatchNormalization
+    - [ ] What about data augmentation?
 
 Part 2
 ------
