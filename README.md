@@ -13,9 +13,14 @@ pipenv lock
 pipenv run python -m ipykernel install --user --name=line-reader
 ```
 
-## Install/update dependencies
+## Install dependencies
 ```
 pipenv install --dev
+```
+
+# Update dependencies
+```
+pipenv sync --dev
 ```
 
 ## Install new dependency
