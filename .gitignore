@@ -1,7 +1,6 @@
 # Data
 data/processed
 data/cache
-data/raw
 
 # Python
 __pycache__

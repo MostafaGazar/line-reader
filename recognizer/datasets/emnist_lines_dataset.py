@@ -6,7 +6,7 @@ import nltk
 
 from recognizer.datasets import Dataset
 
-NLTK_DATA_DIRNAME = Dataset.raw_data_path() / 'nltk'
+NLTK_DATA_DIRNAME = Dataset.cache_data_path() / 'nltk'
 
 
 class EmnistLinesDataset(Dataset):
