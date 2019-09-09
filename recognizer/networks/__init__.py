@@ -4,3 +4,4 @@ from .lenet import lenet
 from .simple import simple
 from .unet import unet
 from .unet_mini import unet_mini
+from .fcn import fcn
